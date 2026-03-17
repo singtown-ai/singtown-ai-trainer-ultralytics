@@ -1,0 +1,18 @@
+{
+  "project": {
+    "labels": [
+      "cat",
+      "dog"
+    ],
+    "type": "OBJECT_DETECTION"
+  },
+  "device": "OpenMV Cam N6",
+  "model_name": "yolov8n_192",
+  "freeze_backbone": true,
+  "batch_size": 8,
+  "epochs": 2,
+  "learning_rate": 0.001,
+  "early_stopping": 3,
+  "export_width": 192,
+  "export_height": 192
+}
