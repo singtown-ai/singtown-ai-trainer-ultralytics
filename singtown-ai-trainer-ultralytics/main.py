@@ -14,10 +14,10 @@ import shutil
 from zipfile import ZipFile
 
 DATASET_PATH = Path("../dataset")
-RUNS_PATH = Path("../runs")
+RUNS_PATH = Path("../runs").absolute()
 shutil.rmtree(RUNS_PATH, ignore_errors=True)
 RUNS_PATH.mkdir(parents=True)
-METRICS_PATH = RUNS_PATH / "detect/train/results.csv"
+METRICS_PATH = RUNS_PATH / "train/results.csv"
 
 @file_watcher(METRICS_PATH, interval=3)
 def file_on_change(content: str):
@@ -43,7 +43,7 @@ print("Download dataset")
 export_yolo(client, DATASET_PATH)
 
 model = YOLO("yolov8n.pt")
-results = model.train(data="../dataset/data.yaml", epochs=EPOCHS, imgsz=IMG_SZ, batch=BATCH_SIZE)
+results = model.train(data="../dataset/data.yaml", epochs=EPOCHS, imgsz=IMG_SZ, batch=BATCH_SIZE, project=str(RUNS_PATH))
 print(results)
 
 export_path = model.export(format="tflite", int8=True, data="../dataset/data.yaml", simplify=True, end2end=False, imgsz=(EXPORT_HEIGHT, EXPORT_WIDTH))
